@@ -14,7 +14,7 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=CLIENT_ID,
                                                scope=scope))
 
 # Get the current user's recently played tracks
-results = sp.current_user_recently_played(limit=50)
+results = sp.current_user_recently_played(limit=1)
 
 # Define your local timezone, e.g., 'US/Eastern' for Eastern Time
 local_tz = pytz.timezone('US/Eastern')
