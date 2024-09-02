@@ -1,9 +1,10 @@
 import sqlite3
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-from creds import CLIENT_ID, CLIENT_SECRET, REDIRECT_URI
+from dotenv import load_dotenv
 import time
 from datetime import datetime
+import os
 
 class SpotifyDatabase:
     
@@ -128,7 +129,7 @@ class SpotifyDatabase:
 
 
 
-def spotify_Retrieval(limit):
+def spotify_Retrieval(limit,CLIENT_ID, CLIENT_SECRET, REDIRECT_URI):
 
     tracks = []
 
@@ -161,6 +162,11 @@ def spotify_Retrieval(limit):
 
 
 def main(db):
+    
+    CLIENT_ID = os.getenv('CLIENT_ID')
+    CLIENT_SECRET = os.getenv('CLIENT_SECRET')
+    REDIRECT_URI = os.getenv('REDIRECT_URI')
+    
     
     # Retrieve Data from spotify and store it into the database every hour
     while True:
