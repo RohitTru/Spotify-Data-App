@@ -26,7 +26,7 @@ class SpotifyDatabase:
         conn = sqlite3.connect(self.databaseName)
         c = conn.cursor()
 
-        c.execute("""CREATE TABLE IF NOT EXISTS tableName (
+        c.execute("""CREATE TABLE IF NOT EXISTS spotifyData (
                      track_Name TEXT,
                      artist TEXT,
                      time_Played TEXT
