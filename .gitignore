@@ -3,3 +3,4 @@ creds.py
 .cache
 __pycache__
 spotifyData.db
+.vscode/
