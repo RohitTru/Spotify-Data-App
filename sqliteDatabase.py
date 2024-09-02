@@ -26,7 +26,7 @@ class SpotifyDatabase:
         conn = sqlite3.connect(self.databaseName)
         c = conn.cursor()
 
-        c.execute("""CREATE TABLE IF NOT EXISTS spotifyData (
+        c.execute("""CREATE TABLE IF NOT EXISTS tableName (
                      track_Name TEXT,
                      artist TEXT,
                      time_Played TEXT
@@ -39,7 +39,7 @@ class SpotifyDatabase:
         conn = sqlite3.connect(self.databaseName)
         c = conn.cursor()
 
-        c.execute("INSERT INTO spotifyData (track_Name, artist, time_Played) VALUES (?, ?, ?)", 
+        c.execute("INSERT INTO spotifyData(track_Name, artist, time_Played) VALUES (?, ?, ?)", 
                   (trackName, artist, timeStamp))
         conn.commit()
         conn.close()
@@ -80,6 +80,12 @@ def spotify_Retrieval(limit):
 
     return tracks
 
+def update_Database():
+    for i in tracks:
+
+        db.insert_entry_into_spotify_database(i[0],i[1],i[2]) 
+        
+        
 
 
 
@@ -89,9 +95,14 @@ def spotify_Retrieval(limit):
 
 if __name__ == '__main__':
  
-    #db = SpotifyDatabase("spotifyData.db")
-    #db.create_table()
-    #db.insert_entry_into_spotify_database('dangerous', '21 Savage', '2024-08-31 22:25:52.645000-04:00')
-    #data = db.retrieve_from_db()
-    #print(data)
+    # Creates a sqlite Data base and initialized a table to hold our table
+    db = SpotifyDatabase("spotifyData.db")
+    db.create_table()
     
+
+    spotify_Retrieval(3)
+
+    update_Database()
+
+    data = db.retrieve_from_db()
+    print(f'This is the data stored in the database {data}')
