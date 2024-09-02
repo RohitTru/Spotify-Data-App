@@ -34,7 +34,7 @@ class SpotifyDatabase:
         conn.commit()
         conn.close()
 
-    def insert_into_spotify_database(self, trackName, artist, timeStamp):
+    def insert_entry_into_spotify_database(self, trackName, artist, timeStamp):
         """Insert data into the spotifyData table."""
         conn = sqlite3.connect(self.databaseName)
         c = conn.cursor()
@@ -58,8 +58,8 @@ class SpotifyDatabase:
 
 
 tracks = []
-def spotifyRetrieval(limit):
-    
+def spotify_Retrieval(limit):
+    # Returns Spotify track details as a list of tuples
     scope = 'user-read-recently-played'
 
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=CLIENT_ID,
@@ -72,9 +72,9 @@ def spotifyRetrieval(limit):
 
     for item in results['items']:
         track = item['track']
-        played_at = item['played_at']
+        playedAt = item['played_at']
         
-        track = (track['name'],track['artists'][0]['name'], played_at)
+        track = (track['name'],track['artists'][0]['name'], playedAt)
         
         tracks.append(track)
 
@@ -84,10 +84,14 @@ def spotifyRetrieval(limit):
 
 
 
+
+
+
 if __name__ == '__main__':
  
-    db = SpotifyDatabase("spotifyData.db")
-    db.create_table()
-    db.insert_into_spotify_database('dangerous', '21 Savage', '2024-08-31 22:25:52.645000-04:00')
-    data = db.retrieve_from_db()
-    print(data)
+    #db = SpotifyDatabase("spotifyData.db")
+    #db.create_table()
+    #db.insert_entry_into_spotify_database('dangerous', '21 Savage', '2024-08-31 22:25:52.645000-04:00')
+    #data = db.retrieve_from_db()
+    #print(data)
+    
