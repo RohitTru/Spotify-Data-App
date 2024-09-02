@@ -163,15 +163,17 @@ def spotify_Retrieval(limit,CLIENT_ID, CLIENT_SECRET, REDIRECT_URI):
 
 def main(db):
     
+    load_dotenv()
+
     CLIENT_ID = os.getenv('CLIENT_ID')
     CLIENT_SECRET = os.getenv('CLIENT_SECRET')
     REDIRECT_URI = os.getenv('REDIRECT_URI')
     
-    
+
     # Retrieve Data from spotify and store it into the database every hour
     while True:
         print(f'Retrieving at {datetime.now()}')
-        spotify_Retrieval(50)
+        spotify_Retrieval(50, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI)
     
         
         # Delete Duplicates
