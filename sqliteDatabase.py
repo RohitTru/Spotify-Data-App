@@ -1,7 +1,8 @@
 import sqlite3
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-from creds import CLIENT_ID, CLIENT_SECRET, REDIRECT_URI 
+from creds import CLIENT_ID, CLIENT_SECRET, REDIRECT_URI
+import time
 
 class SpotifyDatabase:
     
@@ -88,21 +89,19 @@ def update_Database():
         
 
 
-
-
-
-
-
 if __name__ == '__main__':
  
     # Creates a sqlite Data base and initialized a table to hold our table
     db = SpotifyDatabase("spotifyData.db")
     db.create_table()
     
+    # Retrieve Data from spotify and store it into the database every hour
+    while True:
+        spotify_Retrieval(40)
+        update_Database()
+        time.sleep(3600)
 
-    spotify_Retrieval(3)
+    
 
-    update_Database()
 
-    data = db.retrieve_from_db()
-    print(f'This is the data stored in the database {data}')
+    print(f'This is the data stored in the database {db.retrieve_from_db()}')
