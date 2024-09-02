@@ -54,12 +54,59 @@ class SpotifyDatabase:
         data = c.fetchall()
 
         conn.close()
+
+        # Print each entry with a newline break
+        for entry in data:
+            print(entry)
+            print()  # This adds a newline break between each entry
+
         return data
 
+    
+    def delete_duplicates(self):
+        
+        # Connect to the database
+        conn = sqlite3.connect(self.databaseName)
+        c = conn.cursor()
+
+        # Find duplicates based on the unique column
+        # This query selects the row ID of duplicates, except for the first occurrence
+        delete_query = f"""
+        DELETE FROM spotifyData
+        WHERE rowid NOT IN (
+            SELECT MIN(rowid)
+            FROM spotifyData
+            GROUP BY time_Played
+        );
+        """
+
+        try:
+            # Execute the delete query
+            c.execute(delete_query)
+            conn.commit()
+            print(f"Duplicates removed based on time_Played.")
+        except sqlite3.Error as e:
+            print(f"An error occurred: {e}")
+        finally:
+            # Close the connection
+            conn.close()
+        
+    def count_rows_in_table(self):
+        conn = sqlite3.connect(self.databaseName)
+        c = conn.cursor()
+
+        c.execute(f"SELECT COUNT(*) FROM spotifyData")
+        count = c.fetchone()[0]
+        c.close
+        print(count)        
 
 
-tracks = []
+
+
 def spotify_Retrieval(limit):
+
+    tracks = []
+
     # Returns Spotify track details as a list of tuples
     scope = 'user-read-recently-played'
 
@@ -79,14 +126,12 @@ def spotify_Retrieval(limit):
         
         tracks.append(track)
 
-    return tracks
 
-def update_Database():
     for i in tracks:
 
         db.insert_entry_into_spotify_database(i[0],i[1],i[2]) 
         
-        
+
 
 
 if __name__ == '__main__':
@@ -97,11 +142,24 @@ if __name__ == '__main__':
     
     # Retrieve Data from spotify and store it into the database every hour
     while True:
-        spotify_Retrieval(40)
-        update_Database()
+        spotify_Retrieval(50)
+    
+
+        # check count
+        db.count_rows_in_table()
+
+        # Delete Duplicates
+        db.delete_duplicates()
+
+        # check count again
+        db.count_rows_in_table()
+
+
+        #db.retrieve_from_db()
+
         time.sleep(3600)
 
     
 
 
-    print(f'This is the data stored in the database {db.retrieve_from_db()}')
+   
