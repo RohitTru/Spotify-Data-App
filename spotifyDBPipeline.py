@@ -177,7 +177,7 @@ def main(db):
         print(f'Updated track count: {db.count_rows_in_table()}')
        
         print('----------------------------\n\n\n')         
-        time.sleep(300)
+        time.sleep(1800)
 
 
 if __name__ == '__main__':
