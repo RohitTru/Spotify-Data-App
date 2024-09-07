@@ -5,3 +5,4 @@ __pycache__
 spotifyData.db
 .vscode/
 notes.txt
+private_notes.md
