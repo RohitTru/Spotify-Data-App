@@ -1,4 +1,4 @@
-# Spotify Monthly Playlist Generator
+# Spotify Data App
 
 
 ## Description
@@ -16,6 +16,7 @@ okay so bare with me. Im gonna try to live in this repository for a little bit u
     We are going to also remove the docker files and we will return back to docker later.
 
     also this line is just an update to see how git works cause im also learning that.
+    Something.
 
 
 ## To-Do
